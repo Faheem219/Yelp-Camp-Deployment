@@ -26,8 +26,7 @@ const userRoutes = require('./routes/users');
 // ===================
 
 const dbUrl = process.env.DB_URL;
-const DBUrl = 'mongodb://127.0.0.1:27017/yelp-camp';
-mongoose.connect(DBUrl);
+mongoose.connect(dbUrl);
 // mongoose.connect(dbUrl);
 
 // For checking if the database connected or not:
@@ -53,7 +52,7 @@ app.use(mongoSanitize()); // Helps us secure our database queries
 
 // Using mongo store instead of the default memory store:
 const store = MongoStore.create({
- 	mongoUrl: DBUrl,
+ 	mongoUrl: dbUrl,
  	touchAfter: 24 * 60 * 60,
  	crypto: {
  	  secret: 'thisshouldbeabettersecret!'
