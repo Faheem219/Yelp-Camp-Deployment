@@ -50,12 +50,14 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public'))); // Setting lookup directory for static files
 app.use(mongoSanitize()); // Helps us secure our database queries
 
+const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
+
 // Using mongo store instead of the default memory store:
 const store = MongoStore.create({
  	mongoUrl: dbUrl,
  	touchAfter: 24 * 60 * 60,
  	crypto: {
- 	  secret: 'thisshouldbeabettersecret!'
+ 	  secret
  	}
 });
 
@@ -67,7 +69,7 @@ store.on('error', function(e){
 const sessionConfig = {
   store,
   name: 'Session',
-  secret: "thisshouldbeabettersecret",
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
